@@ -1,0 +1,10 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2311
+
+ This plugin allows you to use Google Desktop Search engine to search text
+ files on your hard drives (or network drives if configured in GDS) from within VIM. 
+ This requires python, pygoogledesktop script, python windows extensions, and Google Desktop Search engine installed.
+ Right now, this is a Windows only program, until I find time to modify it
+ for other OS's.
+
+This might get you quicker results instead of using vimgrep or grep.
+
