@@ -3,7 +3,7 @@
 "
 " Author: Jack Atkinson
 " Contact: doxalogos AT gmail DOT com
-" Version: 0.3
+" Version: 0.2
 " Last Updated: 25 July 2008
 
 " This plugin allows you to use Google Desktop Search engine to search text
@@ -50,7 +50,6 @@
 " Changes
 " v0.1: Initial revision
 " v0.2: fixed buffer quirks, updated debug capability
-" v0.3: still working out result buffer kinks
 "
 if !has('python')
     echo "Error: Required vim compiled with +python"
@@ -83,12 +82,10 @@ function! s:SearchInGDS(text)
 "        let i = i + 1
 "    endwhile
     execute "python searchGDS('" . a:text . "', " . g:gds_numresults . ", '" . g:gds_extensions . "')"
-    sbuf! GDSResults
+    setlocal bt=nofile
+    "sbuf! GDSResults
     setlocal nobl
-    setlocal bufhidden=hide
-    setlocal noswapfile
-    setlocal bt="nofile,nowrite"
-"    write! $HOME//GDSResults
+"    write! GDSResults
     execute "/" . a:text . ""
 endfunction
 
@@ -139,19 +136,15 @@ def searchGDS(searchText,numresults,extensions):
         print 'buffer not found'
         #add it back in
         vim.command('bad GDSResults')
-        vim.command("setlocal bt=nofile") 
-        vim.command("setlocal bufhidden=hide") 
-        vim.command("setlocal nobuflisted") 
-        vim.command("setlocal noswapfile") 
+        vim.command('setlocal nobl')
+        vim.command('setlocal bt=\"nofile\"')
         for buf in vim.buffers:
             if(buf.name.find('GDSResults') != -1):
                 b = buf
 
     vim.command("sbuf! GDSResults")
-    vim.command("setlocal bt=nofile") 
-    vim.command("setlocal bufhidden=hide") 
     vim.command("setlocal nobuflisted") 
-    vim.command("setlocal noswapfile") 
+    vim.command("setlocal bt=\"nofile\"") 
     cb = vim.current.buffer
     if(cb.name.find('GDSResults') == -1):
        print("Error finding buffer")
